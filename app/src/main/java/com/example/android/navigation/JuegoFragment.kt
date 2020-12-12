@@ -25,7 +25,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.android.navigation.databinding.FragmentGameBinding
 
-class GameFragment : Fragment() {
+class JuegoFragment : Fragment() {
     data class Question(
             val text: String,
             val answers: List<String>)
@@ -66,7 +66,7 @@ class GameFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentGameBinding>(
-                inflater, R.layout.fragment_game, container, false)
+                inflater, R.layout.fragment_juego, container, false)
 
         // Shuffles the questions and sets the question index to the first question.
         randomizeQuestions()

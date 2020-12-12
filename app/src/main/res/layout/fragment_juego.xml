@@ -17,13 +17,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.navigation.GameFragment">
+    tools:context="com.example.android.navigation.JuegoFragment">
 
     <data>
 
         <variable
             name="game"
-            type="com.example.android.navigation.GameFragment" />
+            type="com.example.android.navigation.JuegoFragment" />
     </data>
 
     <ScrollView
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@drawable/android_category_simple" />
+                app:srcCompat="@drawable/android_categoria_simple" />
 
             <TextView
                 android:id="@+id/questionText"
