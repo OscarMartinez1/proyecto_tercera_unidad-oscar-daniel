@@ -48,5 +48,21 @@
             android:id="@+id/action_juegoGanadoFragment_to_juegoFragment"
             app:destination="@id/juegoFragment"
             app:popUpTo="@id/tituloFragment" />
+        <argument
+            android:name="numeroPreguntas"
+            app:argType="integer" />
+        <argument
+            android:name="preguntasCorrectas"
+            app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/acercadeFragment"
+        android:name="com.example.android.navigation.AcercaDeFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_acercade" />
+    <fragment
+        android:id="@+id/reglasFragment"
+        android:name="com.example.android.navigation.ReglasFragment"
+        android:label="fragment_reglas"
+        tools:layout="@layout/fragment_reglas" />
 </navigation>

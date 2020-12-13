@@ -16,13 +16,15 @@
 
 package com.example.android.navigation
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.android.navigation.databinding.FragmentJuegoGanadoBinding
 
 
@@ -40,6 +42,45 @@ class JuegoGanadoFragment : Fragment() {
 
         }
 
+
+
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater?.inflate(R.menu.ganador_menu, menu)
+
+        if(null == conseguirIntentCompartir().resolveActivity(activity!!.packageManager)){
+            menu?.findItem(R.id.share)?.setVisible(false)
+        }
+    }
+
+
+    private fun conseguirIntentCompartir (): Intent{
+
+        val argumentos: JuegoGanadoFragmentArgs by navArgs()
+
+        return ShareCompat.IntentBuilder.from(activity!!)
+                .setText(getString(R.string.share_success_text,  argumentos.preguntasCorrectas, argumentos.numeroPreguntas))
+                .setType("text/plain")
+                .intent
+
+
+    }
+
+
+    private fun compartirExitoso(){
+        startActivity(conseguirIntentCompartir())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId){
+            R.id.share -> compartirExitoso()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

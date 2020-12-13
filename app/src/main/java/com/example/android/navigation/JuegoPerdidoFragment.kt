@@ -35,7 +35,7 @@ class JuegoPerdidoFragment : Fragment() {
 
         binding.intentarDeNuevoButton.setOnClickListener { vista: View ->
 
-            vista.findNavController().navigate(R.id.action_juegoPerdidoFragment_to_juegoFragment)
+            vista.findNavController().navigate(JuegoPerdidoFragmentDirections.actionJuegoPerdidoFragmentToJuegoFragment())
         }
 
         return binding.root

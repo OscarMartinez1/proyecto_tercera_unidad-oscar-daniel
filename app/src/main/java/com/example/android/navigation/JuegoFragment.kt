@@ -94,7 +94,7 @@ class JuegoFragment : Fragment() {
                         binding.invalidateAll()
                     } else {
                         // We've won!  Navigate to the gameWonFragment.
-                        view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoGanadoFragment())
+                        view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoGanadoFragment(numeroPreguntas, preguntasPosicion))
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
