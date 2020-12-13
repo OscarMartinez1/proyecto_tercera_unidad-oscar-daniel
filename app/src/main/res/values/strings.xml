@@ -26,12 +26,14 @@
     <string name="rules">Reglas</string>
     <string name="about">Acerca de</string>
     <string name="trivia_hint">Trivia Hint</string>
-    <string name="title_android_trivia_question">Android Trivia (%1$d/%2$d)</string>
-    <string name="title_about_trivia">About Trivia</string>
-    <string name="title_trivia_rules">Trivia reglas</string>
+    <string name="titulo_android_trivia_question">Android Trivia (%1$d/%2$d)</string>
+    <string name="titulo_about_trivia">About Trivia</string>
+    <string name="titulo_trivia_rules">Trivia reglas</string>
     <string name="share_success_text">Yo domine #practica2dispositivos moviles con %1$d/%2$d preguntas correctas!</string>
-    <string name="submit_button">Subir</string>
+    <string name="submit_button">Responder</string>
     <string name="congratulations">Felicidades!</string>
     <string name="share">Compartir</string>
     <string name="sharing_not_available">Compartir no disponible.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

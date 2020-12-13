@@ -23,60 +23,57 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.android.navigation.databinding.FragmentGameBinding
+import androidx.navigation.findNavController
+import com.example.android.navigation.databinding.FragmentJuegoBinding
 
 class JuegoFragment : Fragment() {
-    data class Question(
-            val text: String,
-            val answers: List<String>)
+    data class Pregunta(
+            val texto: String,
+            val respuestas: List<String>)
 
-    // The first answer is the correct one.  We randomize the answers before showing the text.
-    // All questions must have four answers.  We'd want these to contain references to string
-    // resources so we could internationalize. (or better yet, not define the questions in code...)
-    private val questions: MutableList<Question> = mutableListOf(
-            Question(text = "What is Android Jetpack?",
-                    answers = listOf("all of these", "tools", "documentation", "libraries")),
-            Question(text = "Base class for Layout?",
-                    answers = listOf("ViewGroup", "ViewSet", "ViewCollection", "ViewRoot")),
-            Question(text = "Layout for complex Screens?",
-                    answers = listOf("ConstraintLayout", "GridLayout", "LinearLayout", "FrameLayout")),
-            Question(text = "Pushing structured data into a Layout?",
-                    answers = listOf("Data Binding", "Data Pushing", "Set Text", "OnClick")),
-            Question(text = "Inflate layout in fragments?",
-                    answers = listOf("onCreateView", "onViewCreated", "onCreateLayout", "onInflateLayout")),
-            Question(text = "Build system for Android?",
-                    answers = listOf("Gradle", "Graddle", "Grodle", "Groyle")),
-            Question(text = "Android vector format?",
-                    answers = listOf("VectorDrawable", "AndroidVectorDrawable", "DrawableVector", "AndroidVector")),
-            Question(text = "Android Navigation Component?",
-                    answers = listOf("NavController", "NavCentral", "NavMaster", "NavSwitcher")),
-            Question(text = "Registers app with launcher?",
-                    answers = listOf("intent-filter", "app-registry", "launcher-registry", "app-launcher")),
-            Question(text = "Mark a layout for Data Binding?",
-                    answers = listOf("<layout>", "<binding>", "<data-binding>", "<dbinding>"))
+    // Lista con todas las preguntas
+    private val preguntas: MutableList<Pregunta> = mutableListOf(
+            Pregunta(texto = "¿Que es Android Jetpack?",
+                    respuestas = listOf("all of these", "tools", "documentation", "libraries")),
+            Pregunta(texto = "¿Clase base para una Layout?",
+                    respuestas = listOf("ViewGroup", "ViewSet", "ViewCollection", "ViewRoot")),
+            Pregunta(texto = "¿Layout para diseños complejos",
+                    respuestas = listOf("ConstraintLayout", "GridLayout", "LinearLayout", "FrameLayout")),
+            Pregunta(texto = "¿Pasando datos estructurados en una Layout?",
+                    respuestas = listOf("Data Binding", "Data Pushing", "Set Text", "OnClick")),
+            Pregunta(texto = "¿Inflar layout en fragments?",
+                    respuestas = listOf("onCreateView", "onViewCreated", "onCreateLayout", "onInflateLayout")),
+            Pregunta(texto = "¿Build system para Android?",
+                    respuestas = listOf("Gradle", "Graddle", "Grodle", "Groyle")),
+            Pregunta(texto = "¿Formato de vectores en Android?",
+                    respuestas = listOf("VectorDrawable", "AndroidVectorDrawable", "DrawableVector", "AndroidVector")),
+            Pregunta(texto = "¿Componente de navegacion en Android?",
+                    respuestas = listOf("NavController", "NavCentral", "NavMaster", "NavSwitcher")),
+            Pregunta(texto = "¿Registra la aplicacion con el launcher?",
+                    respuestas = listOf("intent-filter", "app-registry", "launcher-registry", "app-launcher")),
+            Pregunta(texto = "Marcar una layour para Data Binding?",
+                    respuestas = listOf("<layout>", "<binding>", "<data-binding>", "<dbinding>"))
     )
 
-    lateinit var currentQuestion: Question
-    lateinit var answers: MutableList<String>
-    private var questionIndex = 0
-    private val numQuestions = Math.min((questions.size + 1) / 2, 3)
+    lateinit var preguntaActual: Pregunta
+    lateinit var respuestas: MutableList<String>
+    private var preguntasPosicion = 0
+    private val numeroPreguntas = Math.min((preguntas.size + 1) / 2, 3)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentGameBinding>(
-                inflater, R.layout.fragment_juego, container, false)
+        //Infla la layout de este fragment
+        val binding = DataBindingUtil.inflate<FragmentJuegoBinding>(inflater, R.layout.fragment_juego, container, false)
 
-        // Shuffles the questions and sets the question index to the first question.
-        randomizeQuestions()
+        // Crea aleatoriamente las preguntas
+        crearPreguntasAleatorias()
 
         // Bind this fragment class to the layout
-        binding.game = this
+        binding.juego = this
 
-        // Set the onClickListener for the submitButton
-        binding.submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-        { view: View ->
+
+        binding.responderButton.setOnClickListener { view: View ->
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
             // Do nothing if nothing is checked (id == -1)
             if (-1 != checkedId) {
@@ -88,39 +85,42 @@ class JuegoFragment : Fragment() {
                 }
                 // The first answer in the original question is always the correct one, so if our
                 // answer matches, we have the correct answer.
-                if (answers[answerIndex] == currentQuestion.answers[0]) {
-                    questionIndex++
+                if (respuestas[answerIndex] == preguntaActual.respuestas[0]) {
+                    preguntasPosicion++
                     // Advance to the next question
-                    if (questionIndex < numQuestions) {
-                        currentQuestion = questions[questionIndex]
-                        setQuestion()
+                    if (preguntasPosicion < numeroPreguntas) {
+                        preguntaActual = preguntas[preguntasPosicion]
+                        establecerPregunta()
                         binding.invalidateAll()
                     } else {
                         // We've won!  Navigate to the gameWonFragment.
+                        view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoGanadoFragment())
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
+                    view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoPerdidoFragment())
                 }
             }
         }
         return binding.root
     }
 
-    // randomize the questions and set the first question
-    private fun randomizeQuestions() {
-        questions.shuffle()
-        questionIndex = 0
-        setQuestion()
+    // Establece las preguntas aleatorias y establece la primer pregunta.
+    private fun crearPreguntasAleatorias() {
+        preguntas.shuffle()
+        preguntasPosicion = 0
+        establecerPregunta()
     }
 
-    // Sets the question and randomizes the answers.  This only changes the data, not the UI.
-    // Calling invalidateAll on the FragmentGameBinding updates the data.
-    private fun setQuestion() {
-        currentQuestion = questions[questionIndex]
+    // Establece las preguntas y respuestas aleatoriamente..
+    // Al llamar invalidateAll en el  FragmentJuegoBinding actualiza la informacion.
+    private fun establecerPregunta() {
+
+        preguntaActual = preguntas[preguntasPosicion]
         // randomize the answers into a copy of the array
-        answers = currentQuestion.answers.toMutableList()
+        respuestas = preguntaActual.respuestas.toMutableList()
         // and shuffle them
-        answers.shuffle()
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_android_trivia_question, questionIndex + 1, numQuestions)
+        respuestas.shuffle()
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.titulo_android_trivia_question, preguntasPosicion + 1, numeroPreguntas)
     }
 }

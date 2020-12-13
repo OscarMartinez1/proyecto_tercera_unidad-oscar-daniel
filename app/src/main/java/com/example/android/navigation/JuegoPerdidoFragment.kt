@@ -22,14 +22,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.android.navigation.databinding.FragmentGameOverBinding
+import androidx.navigation.findNavController
+import com.example.android.navigation.databinding.FragmentJuegoPerdidoBinding
 
 class JuegoPerdidoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val binding: FragmentGameOverBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_juego_perdido, container, false)
+        val binding: FragmentJuegoPerdidoBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_juego_perdido, container, false)
+
+
+
+        binding.intentarDeNuevoButton.setOnClickListener { vista: View ->
+
+            vista.findNavController().navigate(R.id.action_juegoPerdidoFragment_to_juegoFragment)
+        }
+
         return binding.root
     }
 }
