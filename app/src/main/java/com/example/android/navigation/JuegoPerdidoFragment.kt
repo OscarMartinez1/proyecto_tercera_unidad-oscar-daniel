@@ -31,13 +31,6 @@ class JuegoPerdidoFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentJuegoPerdidoBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_juego_perdido, container, false)
 
-
-
-        binding.intentarDeNuevoButton.setOnClickListener { vista: View ->
-
-            vista.findNavController().navigate(JuegoPerdidoFragmentDirections.actionJuegoPerdidoFragmentToJuegoFragment())
-        }
-
         return binding.root
     }
 }

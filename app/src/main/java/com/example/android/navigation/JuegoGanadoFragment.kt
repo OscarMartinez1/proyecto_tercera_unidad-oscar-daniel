@@ -29,58 +29,11 @@ import com.example.android.navigation.databinding.FragmentJuegoGanadoBinding
 
 
 class JuegoGanadoFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         val binding: FragmentJuegoGanadoBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_juego_ganado, container, false)
-
-
-        binding.siguientePartidaButton.setOnClickListener { vista: View ->
-
-            vista.findNavController().navigate(R.id.action_juegoGanadoFragment_to_juegoFragment)
-
-
-        }
-
-
-
-        setHasOptionsMenu(true)
 
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater?.inflate(R.menu.ganador_menu, menu)
-
-        if(null == conseguirIntentCompartir().resolveActivity(activity!!.packageManager)){
-            menu?.findItem(R.id.share)?.setVisible(false)
-        }
-    }
-
-
-    private fun conseguirIntentCompartir (): Intent{
-
-        val argumentos: JuegoGanadoFragmentArgs by navArgs()
-
-        return ShareCompat.IntentBuilder.from(activity!!)
-                .setText(getString(R.string.share_success_text,  argumentos.preguntasCorrectas, argumentos.numeroPreguntas))
-                .setType("text/plain")
-                .intent
-
-
-    }
-
-
-    private fun compartirExitoso(){
-        startActivity(conseguirIntentCompartir())
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId){
-            R.id.share -> compartirExitoso()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

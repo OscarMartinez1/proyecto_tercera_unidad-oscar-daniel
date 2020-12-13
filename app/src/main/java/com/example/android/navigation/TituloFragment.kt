@@ -16,28 +16,7 @@ class TituloFragment : Fragment() {
 
         val binding : FragmentTituloBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_titulo, container, false)
 
-
-        binding.jugarButton.setOnClickListener{vista: View ->
-
-            vista.findNavController().navigate(TituloFragmentDirections.actionTituloFragmentToJuegoFragment())
-
-        }
-
-        setHasOptionsMenu(true)
-
-        // Inflate the layout for this fragment
         return binding.root
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater?.inflate(R.menu.overflow_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!, view!!.findNavController()) ||   super.onOptionsItemSelected(item)
-
-    }
 }

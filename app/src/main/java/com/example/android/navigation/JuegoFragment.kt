@@ -34,7 +34,7 @@ class JuegoFragment : Fragment() {
     // Lista con todas las preguntas
     private val preguntas: MutableList<Pregunta> = mutableListOf(
             Pregunta(texto = "¿Que es Android Jetpack?",
-                    respuestas = listOf("all of these", "tools", "documentation", "libraries")),
+                    respuestas = listOf("Todas las opciones", "tools", "documentation", "libraries")),
             Pregunta(texto = "¿Clase base para una Layout?",
                     respuestas = listOf("ViewGroup", "ViewSet", "ViewCollection", "ViewRoot")),
             Pregunta(texto = "¿Layout para diseños complejos",
@@ -73,7 +73,7 @@ class JuegoFragment : Fragment() {
         binding.juego = this
 
 
-        binding.responderButton.setOnClickListener { view: View ->
+        binding.responderButton.setOnClickListener { vista: View ->
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
             // Do nothing if nothing is checked (id == -1)
             if (-1 != checkedId) {
@@ -93,12 +93,12 @@ class JuegoFragment : Fragment() {
                         establecerPregunta()
                         binding.invalidateAll()
                     } else {
-                        // We've won!  Navigate to the gameWonFragment.
-                        view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoGanadoFragment(numeroPreguntas, preguntasPosicion))
+                        // Ganamos!  Navigate al JuegoGanadoFragment.
+
                     }
                 } else {
-                    // Game over! A wrong answer sends us to the gameOverFragment.
-                    view.findNavController().navigate(JuegoFragmentDirections.actionJuegoFragmentToJuegoPerdidoFragment())
+                    // Perdiste! Navigate al JuegoPerdidoFragment.
+
                 }
             }
         }
